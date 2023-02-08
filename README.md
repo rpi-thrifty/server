@@ -8,7 +8,7 @@ You will need ```node```, ```npm``` and ```git``` for this project.
 ```
 $ git clone git@github.com:rpi-thrifty/website.git
 $ cd website/
-$ npm install
+$ npm istall
 $ npm start
 ```
 

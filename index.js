@@ -7,6 +7,28 @@ nodemon index.js
 to run server static (no refresh)
 node index.js
 */
+// server
+const { Pool } = require("pg");
+const connectDb = async () => {
+    try {
+        const pool = new Pool({
+            user: "johcuvld",
+            host: "castor.db.elephantsql.com",
+            database: "johcuvld",
+            password: "EquCpGVmavxto3I3rxif8lZMmEEnqQLN",
+            port: "5432",
+        });
+
+        await pool.connect()
+        const res = await pool.query('SELECT * FROM clients')
+        console.log(res)
+        await pool.end()
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+connectDb()
 
 const express = require("express");
 const app = express();
