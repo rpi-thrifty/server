@@ -7,17 +7,66 @@ nodemon index.js
 to run server static (no refresh)
 node index.js
 */
+// server
+const { Pool } = require("pg");
+const connectDb = async () => {
+    try {
+        const pool = new Pool({
+            user: "johcuvld",
+            host: "castor.db.elephantsql.com",
+            database: "johcuvld",
+            password: "EquCpGVmavxto3I3rxif8lZMmEEnqQLN",
+            port: "5432",
+        });
+
+        await pool.connect()
+        const res = await pool.query('SELECT * FROM clients')
+        console.log(res)
+        await pool.end()
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+connectDb()
 
 const express = require("express");
 const app = express();
-const mysql = require("mysql");
+const cors = require("cors");
+const pool = require("./db"); 
 
-const db = mysql.createPool({
-    host: "localhost",
-    user: "root",
-    password: "password",
-    database: "TestData",
+//middleware
+app.use(cors());
+app.use(express.json()); //req.body
+
+//ROUTES
+
+// create
+
+app.post("/items", async(req, res) => {
+    try {
+        const { description } = req.body;
+        const newTodo = await pool.query(
+            "INSERT INTO table_test (description) VALUES($1$) RETURNING *",
+            [description]
+        )
+        res.json(newTodo.rows[0]);
+    } catch (err) {
+        console.error(err.message);
+    }
 })
+
+// get all
+
+app.get("/items", async(req, res) => {
+    try {
+        const allTodos = await pool.query("SELECT * FROM table_test");
+        res.json(allTodos.rows);
+    } catch (err) {
+        console.error(err.message);
+    }
+})
+
 
 // once someone accesses the home page, it will send hello world
 // req = get information from the frontend
