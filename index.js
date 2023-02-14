@@ -8,28 +8,25 @@ to run server static (no refresh)
 node index.js
 */
 // server
-const { Pool } = require("pg");
-const connectDb = async () => {
-    try {
-        const pool = new Pool({
-            user: "johcuvld",
-            host: "castor.db.elephantsql.com",
-            database: "johcuvld",
-            password: "EquCpGVmavxto3I3rxif8lZMmEEnqQLN",
-            port: "5432",
-        });
+const { Client } = require('pg');
 
-        await pool.connect()
-        const res = await pool.query('SELECT * FROM clients')
-        console.log(res)
-        await pool.end()
-    } catch (error) {
-        console.log(error)
+const client = new Client({
+    user: "johcuvld",
+    host: "castor.db.elephantsql.com",
+    database: "johcuvld",
+    password: "EquCpGVmavxto3I3rxif8lZMmEEnqQLN",
+    port: "5432",
+});
+
+client.connect();
+client.query('SELECT * FROM public.clients', (err, res) => {
+    if (err) {
+        console.error(err);
+    } else {
+        console.log(res.rows);
     }
-}
-
-connectDb()
-
+    client.end();
+});
 const express = require("express");
 const app = express();
 const cors = require("cors");
