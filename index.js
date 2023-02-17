@@ -8,25 +8,26 @@ to run server static (no refresh)
 node index.js
 */
 // server
+//connect to database and `SELECT * FROM public.clients`
 const { Client } = require('pg');
-
 const client = new Client({
     user: "johcuvld",
     host: "castor.db.elephantsql.com",
     database: "johcuvld",
-    password: "EquCpGVmavxto3I3rxif8lZMmEEnqQLN",
+    password:"EquCpGVmavxto3I3rxif8lZMmEEnqQLN",
     port: "5432",
-});
-
+}
+);
 client.connect();
-client.query('SELECT * FROM public.clients', (err, res) => {
+const query = 'SELECT * FROM "public"."clients" LIMIT 100';
+client.query(query, (err, res) => {
     if (err) {
         console.error(err);
     } else {
         console.log(res.rows);
     }
-    client.end();
 });
+
 const express = require("express");
 const app = express();
 
@@ -46,3 +47,5 @@ app.get('/sales', (req, res) => {
 app.listen(3002, () => {
     console.log("running on port 3002");
 })
+
+client.end();
