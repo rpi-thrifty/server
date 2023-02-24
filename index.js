@@ -15,9 +15,10 @@ const client = new Client({
     host: "castor.db.elephantsql.com",
     database: "johcuvld",
     password:"EquCpGVmavxto3I3rxif8lZMmEEnqQLN",
-    port: "5432",
-}
-);
+    port: "3002",
+});
+// put password in an env file
+
 client.connect();
 const query = 'SELECT * FROM "public"."clients" LIMIT 100';
 client.query(query, (err, res) => {
@@ -31,6 +32,16 @@ client.query(query, (err, res) => {
 const express = require("express");
 const app = express();
 
+// receiving data from the frontend here
+const bodyParser = require("body-parser");
+app.use(bodyParser.json());
+
+app.post('/api/array', (req, res) => {
+    const data = req.body.data;
+    console.log(data);
+    res.send({ message: 'Array received!' });
+  });
+
 // once someone accesses the home page, it will send hello world
 // req = get information from the frontend
 // res = response to be sent to the frontend
@@ -43,7 +54,7 @@ app.get('/sales', (req, res) => {
     res.send("You are at sales");
 })
 
-// access localhost:3001
+// access localhost:3002
 app.listen(3002, () => {
     console.log("running on port 3002");
 })
