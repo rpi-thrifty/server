@@ -67,8 +67,6 @@ app.get("/items", async (req, res) => {
     }
 });
 
-<<<<<<< HEAD
-=======
 // receiving data from the frontend here
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());
@@ -82,7 +80,6 @@ app.post('/api/array', (req, res) => {
 // once someone accesses the home page, it will send hello world
 // req = get information from the frontend
 // res = response to be sent to the frontend
->>>>>>> 60e4365cdd99277edacce2bf8c629e1668cfac86
 app.get('/', (req, res) => {
     res.send("Hello World!");
 })
@@ -90,8 +87,6 @@ app.get('/', (req, res) => {
 app.listen(5432, () => {
     console.log("running on port 5432");
 })
-<<<<<<< HEAD
-=======
 
 // access localhost:3002
 app.listen(3002, () => {
@@ -99,4 +94,3 @@ app.listen(3002, () => {
 })
 
 client.end();
->>>>>>> 60e4365cdd99277edacce2bf8c629e1668cfac86
