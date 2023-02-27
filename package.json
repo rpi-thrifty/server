@@ -19,21 +19,13 @@
   },
   "homepage": "https://github.com/rpi-thrifty/server#readme",
   "dependencies": {
-<<<<<<< HEAD
-    "body-parser": "^1.20.1",
-    "cors": "^2.8.5",
-=======
+    "all": "^0.0.0",
     "body-parser": "^1.20.2",
->>>>>>> 60e4365cdd99277edacce2bf8c629e1668cfac86
+    "cors": "^2.8.5",
     "express": "^4.18.2",
     "my-sql": "^1.2.15",
     "mysql": "^2.18.1",
     "nodemon": "^2.0.20",
     "pg": "^8.9.0"
-<<<<<<< HEAD
-  },
-  "keywords": []
-=======
   }
->>>>>>> 60e4365cdd99277edacce2bf8c629e1668cfac86
 }
