@@ -9,26 +9,10 @@ node index.js
 */
 // server
 //connect to database and `SELECT * FROM public.clients`
-const { Client } = require('pg');
-const client = new Client({
-    user: "johcuvld",
-    host: "castor.db.elephantsql.com",
-    database: "johcuvld",
-    password:"EquCpGVmavxto3I3rxif8lZMmEEnqQLN",
-    port: "3002",
-});
-// put password in an env file
-
-client.connect();
-const query = 'SELECT * FROM "public"."clients" LIMIT 100';
-client.query(query, (err, res) => {
-    if (err) {
-        console.error(err);
-    } else {
-        console.log(res.rows);
-    }
-});
-
+var pg = require('pg');
+var connectionString = 'postgresql://doadmin:AVNS_nZkr6SUCVGnV_ch-7lB@thrifty-do-user-13664740-0.b.db.ondigitalocean.com:25060/defaultdb?sslmode=require'
+var pgClient = new pg.Client(connectionString);
+pgClient.connect();
 const express = require("express");
 const app = express();
 
@@ -59,4 +43,3 @@ app.listen(3002, () => {
     console.log("running on port 3002");
 })
 
-client.end();
