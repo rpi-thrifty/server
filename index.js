@@ -8,18 +8,38 @@ to run server static (no refresh)
 node index.js
 */
 // server
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+
 //connect to database and `SELECT * FROM public.clients`
 var pg = require('pg');
 var connectionString = 'postgresql://doadmin:AVNS_nZkr6SUCVGnV_ch-7lB@thrifty-do-user-13664740-0.b.db.ondigitalocean.com:25060/defaultdb?sslmode=require'
 var pgClient = new pg.Client(connectionString);
-pgClient.connect();
+pgClient.connect(function(err) {
+    if (err) {
+        console.error('Error connecting to database:', err.stack);
+        return;
+    }
+
+    console.log('Connected to database!');
+
+    pgClient.query('SELECT * FROM public.clients', function(err, result) {
+        if (err) {
+            console.error('Error executing query:', err.stack);
+            return;
+        }
+
+        console.log('Result:', result.rows);
+    });
+});
+
+
+
 const express = require("express");
 const app = express();
 
 // receiving data from the frontend here
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());
-
 app.post('/api/array', (req, res) => {
     const data = req.body.data;
     console.log(data);
