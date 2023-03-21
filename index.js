@@ -46,7 +46,7 @@ app.post('/api/array', async (req, res) => {
 
 
         // Insert each array item into the clients table
-     if (data[0] === 1) {
+     if (data[4] === 1) {
             const {
                 email,
                 phone,
@@ -73,7 +73,7 @@ app.post('/api/array', async (req, res) => {
             ];
             await pgClient.query(query, values);
         }
-        else if (data[0] === 2) {
+        else if (data[4] === 2) {
             const {
                 email,
                 phone,
@@ -100,7 +100,7 @@ app.post('/api/array', async (req, res) => {
             ];
             await pgClient.query(query, values);
         }
-     else if (data[0] === 3) {
+     else if (data[4] === 3) {
          const {
              email,
              phone,
@@ -126,7 +126,7 @@ app.post('/api/array', async (req, res) => {
              description,
          ];
          await pgClient.query(query, values);
-     }else if (data[0] === 4) {
+     }else if (data[4] === 4) {
          const {
              email,
              phone,
