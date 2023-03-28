@@ -16,6 +16,7 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 
 const express = require("express");
+const autocorrect = require('autocorrect');
 const app = express();
 
 // receiving data from the frontend here
@@ -162,6 +163,43 @@ app.post('/api/array', async (req, res) => {
         res.status(500).send({ error: 'Error inserting data into database' });
     }
 });
+//code me a node js function that connects to a database with 4 tables, electronics, clothing, furniture, misc and then searches through the titles of each table and returns the results =
+function searchTitles(tag, searchTerm) {
+    return new Promise((resolve, reject) => {
+        let query = '';
+        switch (tag) {
+            case 'electronics':
+                query = `SELECT * FROM Electronics WHERE title LIKE '%${searchTerm}%'`;
+                break;
+            case 'clothing':
+                query = `SELECT * FROM clothing WHERE title LIKE '%${searchTerm}%'`;
+                break;
+            case 'furniture':
+                query = `SELECT * FROM furniture WHERE title LIKE '%${searchTerm}%'`;
+                break;
+            case 'misc':
+                query = `SELECT * FROM misc WHERE title LIKE '%${searchTerm}%'`;
+                break;
+            case 'all':
+                query = `SELECT * FROM Electronics WHERE title LIKE '%${searchTerm}%' UNION ALL 
+                 SELECT * FROM clothing WHERE title LIKE '%${searchTerm}%' UNION ALL 
+                 SELECT * FROM furniture WHERE title LIKE '%${searchTerm}%' UNION ALL 
+                 SELECT * FROM misc WHERE title LIKE '%${searchTerm}%'`;
+                break;
+            default:
+                reject('Invalid tag provided');
+                return;
+        }
+        connection.query(query, (err, results) => {
+            if (err) reject(err);
+            resolve(results);
+        });
+    });
+}
+function autocorrectWord(word) {
+    return autocorrect(word);
+}
+
 
 
 // once someone accesses the home page, it will send hello world
