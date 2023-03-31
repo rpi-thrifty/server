@@ -196,9 +196,46 @@ function searchTitles(tag, searchTerm) {
         });
     });
 }
+function getItemsByTag(tag) {
+    return new Promise((resolve, reject) => {
+        let query = '';
+        switch (tag) {
+            case 'electronics':
+                query = 'SELECT * FROM Electronics';
+                break;
+            case 'clothing':
+                query = 'SELECT * FROM clothing';
+                break;
+            case 'furniture':
+                query = 'SELECT * FROM furniture';
+                break;
+            case 'misc':
+                query = 'SELECT * FROM misc';
+                break;
+            case 'all':
+                query = 'SELECT * FROM Electronics UNION ALL SELECT * FROM clothing UNION ALL SELECT * FROM furniture UNION ALL SELECT * FROM misc';
+                break;
+            default:
+                reject('Invalid tag provided');
+                return;
+        }
+        connection.query(query, (err, results) => {
+            if (err) reject(err);
+            const resultArrays = [];
+            for (let i = 0; i < results.length; i++) {
+                const result = results[i];
+                const values = Object.values(result);
+                resultArrays.push(values);
+            }
+            resolve(resultArrays);
+        });
+    });
+}
+
 function autocorrectWord(word) {
     return autocorrect(word);
 }
+
 
 
 
