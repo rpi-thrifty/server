@@ -1,19 +1,3 @@
-/*
-Development section with custom scripts:
-
-to run server in development mode (constant refresh)
-nodemon index.js
-
-to run server static (no refresh)
-node index.js
-*/
-// server
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-
-//connect to database and `SELECT * FROM public.clients`
-
-
-
 
 const express = require("express");
 const autocorrect = require('autocorrect');
@@ -243,15 +227,14 @@ function autocorrectWord(word) {
 // req = get information from the frontend
 // res = response to be sent to the frontend
 app.get('/', (req, res) => {
-    res.send("Hello World!");
+    res.send("running");
 })
 
-// once someone access the sales page, it will send something else
-app.get('/sales', (req, res) => {
-    res.send("You are at sales");
+app.post("/", async(req, res) => {
+    const {combineDict} = req.body;
+    console.log(combineDict);
 })
 
-// access localhost:3002
 app.listen(3002, () => {
     console.log("running on port 3002");
 })
